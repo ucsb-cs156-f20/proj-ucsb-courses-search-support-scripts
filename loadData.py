@@ -33,8 +33,15 @@ def store_class_in_db(c,db):
     # that uniquely identify the document in the collection
     # In our cases that will be the quarter,courseId
     
-    result = db.courses.update_one(c,upsert=True)
-    print("stored ",c['courseId'])
+    filter = {
+        "courseId" : c['courseId'],
+        "quarter" : c['quarter']
+    }
+    update = {
+        "$set" : c
+    }
+    result = db.courses.update_one(filter,update,upsert=True)
+    print(f"result= {result}, updated {c['courseId']}")
     
 if __name__=="__main__":
     main()
