@@ -15,8 +15,8 @@ def main():
     db = connect()
     print("Connected ..")    
 
-    for i in range(1,26):
-        store_classes_from_file("json_data/results_" + str(i) + ".json", db)
+    for i in range(1,27):
+        store_classes_from_file("json_data/results_20201_" + str(i) + ".json", db)
 
 def store_classes_from_file(filename,db):    
     with open(filename) as json_data:
