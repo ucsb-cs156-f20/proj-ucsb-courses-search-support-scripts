@@ -21,7 +21,7 @@ def store_classes_from_text(text,db,pageNumber,numberPages):
         store_class_in_db(c,db,i,len(d['classes']),pageNumber,numberPages)
 
 def store_class_in_db(c,db,i,numClasses,pageNumber,numberPages):
-    print(f"storing {c['courseId']} (course {i} of {numClasses}, page {pageNumber} of {numberPages})")
+    print(f"storing {c['courseId']}, quarter {c['quarter']} (course {i} of {numClasses}, page {pageNumber} of {numberPages})")
 
     # We think this makes the updates idempotent, i.e. no duplicates
     # That only works, though, if you have identified a set of attributes
@@ -36,7 +36,7 @@ def store_class_in_db(c,db,i,numClasses,pageNumber,numberPages):
         "$set" : c
     }
     result = db.courses.update_one(filter,update,upsert=True)
-    print(f"result= {result}, updated {c['courseId']}")
+    print(f"updated {c['courseId']} matched={result.matched_count}, modified={result.modified_count} upsert={result.upserted_id}")
     
 pageSize = 100
 
@@ -83,7 +83,7 @@ if __name__=="__main__":
     db = connect()
     print("Connected ..")    
 
-    grabAndUpdateCourseDataForQuarter(db,"20192")
+    grabAndUpdateCourseDataForQuarter(db,"20191")
 
 
 
