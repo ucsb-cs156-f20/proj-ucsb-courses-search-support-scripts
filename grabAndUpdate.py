@@ -83,8 +83,14 @@ if __name__=="__main__":
     db = connect()
     print("Connected ..")    
 
-    grabAndUpdateCourseDataForQuarter(db,"20191")
-
+    grabAndUpdateCourseDataForQuarter(db,"20202")
+    
+    for year in range(2018,2016,-1):
+        for quarter in range(4,0,-1):
+            ay = str(year) + str(quarter)
+            print(ay)
+            grabAndUpdateCourseDataForQuarter(db,ay)
+     
 
 
     
