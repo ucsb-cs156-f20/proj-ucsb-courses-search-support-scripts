@@ -13,14 +13,15 @@ def connect():
     db = client.ucsbCourses
     return db
 
-def store_classes_from_text(text,db,numberPages):    
+def store_classes_from_text(text,db,pageNumber,numberPages):    
     d = json.loads(text)
-    print(f"storing classes from pagenumber={d['pageNumber']} of {numberPages}")
+    assert pageNumber==d['pageNumber']
+    print(f"storing classes from pagenumber={pageNumber} of {numberPages}")
     for i,c in enumerate(d['classes']):
-        store_class_in_db(c,db,i,len(d['classes']))
+        store_class_in_db(c,db,i,len(d['classes']),pageNumber,numberPages)
 
-def store_class_in_db(c,db,i,numClasses):
-    print(f"storing {c['courseId']} ({i} of {numClasses})")
+def store_class_in_db(c,db,i,numClasses,pageNumber,numberPages):
+    print(f"storing {c['courseId']} (course {i} of {numClasses}, page {pageNumber} of {numberPages})")
 
     # We think this makes the updates idempotent, i.e. no duplicates
     # That only works, though, if you have identified a set of attributes
@@ -73,7 +74,7 @@ def grabAndUpdateCourseDataForQuarter(db,quarter="20202"):
     for i in range(1,numberPages+1):
         print(f"getting data for page {i} of {numberPages} for quarter {quarter}")
         text = grabCourseData(quarter,pageNumber=i,numberPages=numberPages)
-        store_classes_from_text(text,db,numberPages)  
+        store_classes_from_text(text,db,i,numberPages)  
 
     
 if __name__=="__main__":
@@ -82,7 +83,7 @@ if __name__=="__main__":
     db = connect()
     print("Connected ..")    
 
-    grabAndUpdateCourseDataForQuarter(db,"20193")
+    grabAndUpdateCourseDataForQuarter(db,"20192")
 
 
 
