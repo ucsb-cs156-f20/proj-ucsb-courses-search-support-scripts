@@ -18,3 +18,14 @@ Here's a picture:
 
 ![create the index](images/createIndex.png)
 
+# Creating the text index
+
+Also create a text index like this:
+
+```json
+{
+  "classSections.instructors.instructor" : "text",
+  "title" : "text",
+  "description" : "text"
+}
+```
