@@ -1,4 +1,3 @@
-
 import os
 import json
 import ssl
@@ -8,9 +7,8 @@ import requests
 import math
 
 def connect():
-    client = MongoClient(f"mongodb+srv://{os.environ['DB_USER']}:{os.environ['DB_PASSWORD']}@cluster0-tqzvb.mongodb.net/test?retryWrites=true&w=majority",ssl_cert_reqs=ssl.CERT_NONE)
-
-    db = client.ucsbCourses
+    client = MongoClient(f"{os.environ['MONGODB_URL']}",ssl_cert_reqs=ssl.CERT_NONE)
+    db = client.database
     return db
 
 def store_classes_from_text(text,db,pageNumber,numberPages):    
@@ -83,9 +81,9 @@ if __name__=="__main__":
     db = connect()
     print("Connected ..")    
 
-    grabAndUpdateCourseDataForQuarter(db,"20202")
+    # grabAndUpdateCourseDataForQuarter(db,"20211")
     
-    for year in range(2018,2016,-1):
+    for year in range(2010,2005,-1):
         for quarter in range(4,0,-1):
             ay = str(year) + str(quarter)
             print(ay)

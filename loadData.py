@@ -5,8 +5,7 @@ import ssl
 from pymongo import MongoClient
 
 def connect():
-    client = MongoClient(f"mongodb+srv://{os.environ['DB_USER']}:{os.environ['DB_PASSWORD']}@cluster0-tqzvb.mongodb.net/test?retryWrites=true&w=majority",ssl_cert_reqs=ssl.CERT_NONE)
-
+    client = MongoClient(f"{os.environ['MONGODB_URL']}",ssl_cert_reqs=ssl.CERT_NONE)
     db = client.ucsbCourses
     return db
 
